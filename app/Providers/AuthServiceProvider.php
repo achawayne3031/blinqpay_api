@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+         'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -27,15 +27,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Passport::routes();
+        Passport::enablePasswordGrant();
+
+        // if (!$this->app->routesAreCached()) {
+           ///  Passport::routes();
+        // }
 
 
-
-       /// Passport::routes();
  
-        Passport::tokensExpireIn(Carbon::now()->addDays(15));
+        // Passport::tokensExpireIn(Carbon::now()->addDays(15));
      
-        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
+        // Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
 
      
 

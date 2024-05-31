@@ -43,3 +43,23 @@ Route::group(
 );
 
 
+
+
+
+///// Promotional Ads //////
+Route::group(
+    [
+        'middleware' => ['cors', 'auth.passport', 'auth:api'],
+        'prefix' => 'posts',
+        'namespace' => 'App\Http\Controllers',
+    ],
+    function ($router) {
+        Route::post('/create-post', 'PostController@create_post');
+        Route::post('/delete-post', 'PostController@delete_post');
+        Route::post('/update-post', 'PostController@update_post');
+        Route::get('/get-post', 'PostController@get_post');
+    }
+);
+
+
+
