@@ -57,7 +57,8 @@ Route::group(
         Route::post('/create-post', 'PostController@create_post');
         Route::post('/delete-post', 'PostController@delete_post');
         Route::post('/update-post', 'PostController@update_post');
-        Route::get('/get-post', 'PostController@get_post');
+        Route::get('/all-posts', 'PostController@all_post');
+
     }
 );
 

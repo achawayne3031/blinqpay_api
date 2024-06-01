@@ -11,6 +11,26 @@ use Illuminate\Support\Facades\DB;
 class DBHelpers
 {
   
+    //// 08 94 89 34 75
+
+    public static function with_query($dataModel, $with_clause = [])
+    {
+        try {
+            return $dataModel
+                ::query()
+                ->with($with_clause)
+                ->orderBy('id', 'DESC')
+                ->get();
+        } catch (Exception $e) {
+            return ResponseHelper::error_response(
+                'Server Error',
+                $e->getMessage(),
+                401,
+                $e->getLine()
+            );
+        }
+    }
+
 
     public static function exists($dataModel, $data)
     {
@@ -29,7 +49,6 @@ class DBHelpers
         }
     }
 
-  
 
     ////// get all query data
     public static function all_data($dataModel)

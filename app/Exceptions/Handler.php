@@ -87,6 +87,11 @@ class Handler extends ExceptionHandler
             return self::serverErrResponse($error);
         });
 
+
+
+
+        
+
      
     }
 }

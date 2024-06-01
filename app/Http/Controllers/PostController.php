@@ -16,6 +16,23 @@ class PostController extends Controller
     //
 
 
+    public function all_post(Request $request){
+
+     /////   return "hdhdhd";
+
+        $all_post = DBHelpers::with_query(
+            Post::class,
+            ['user']
+        );
+
+        return ResponseHelper::success_response(
+            'All post data fetched was successfully',
+            $all_post
+        );
+
+    }
+
+
     public function delete_post(Request $request)
     {
         if ($request->isMethod('post')) {
