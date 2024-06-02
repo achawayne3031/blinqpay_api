@@ -12,12 +12,12 @@ class PostValidator
     {
         self::$validation_rules = [
             'create_post' => [
-                'title' => 'required|unique:posts',
+                'title' => 'required',
                 'description' => 'required',
                 'post' => 'required'
             ],
             'update_post' => [
-                'title' => 'required|unique:posts',
+                'title' => 'required',
                 'description' => 'required',
                 'post' => 'required',
                 'post_id' => 'required'

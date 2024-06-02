@@ -58,6 +58,8 @@ Route::group(
         Route::post('/delete-post', 'PostController@delete_post');
         Route::post('/update-post', 'PostController@update_post');
         Route::get('/all-posts', 'PostController@all_post');
+        Route::get('/view-post/{post_id}', 'PostController@view_post');
+
 
     }
 );

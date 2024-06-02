@@ -13,6 +13,37 @@ class DBHelpers
   
     //// 08 94 89 34 75
 
+    public static function with_where_query_filter_first(
+        $dataModel,
+        $with_clause = [],
+        $where = null
+    ) {
+        try {
+            if ($where == null) {
+                return $dataModel
+                    ::query()
+                    ->with($with_clause)
+                    ->get()
+                    ->first();
+            } else {
+                return $dataModel
+                    ::query()
+                    ->with($with_clause)
+                    ->where($where)
+                    ->get()
+                    ->first();
+            }
+        } catch (Exception $e) {
+            return ResponseHelper::error_response(
+                'Server Error',
+                $e->getMessage(),
+                401,
+                $e->getLine()
+            );
+        }
+    }
+    
+
     public static function with_query($dataModel, $with_clause = [])
     {
         try {

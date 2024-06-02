@@ -15,15 +15,47 @@ class PostController extends Controller
 {
     //
 
+    
+    public function view_post($post_id){
+
+        if (!DBHelpers::exists(Post::class, [
+                'id' => $post_id,
+            ])) {
+            return ResponseHelper::error_response(
+                'Post not found',
+                null,
+                401
+            );
+        }
+
+
+        $view = DBHelpers::with_where_query_filter_first(
+            Post::class,
+            ['user'],
+            ['id' => $post_id]
+        );
+
+
+        
+        $view->images = json_decode($view->images);
+        
+
+        return ResponseHelper::success_response(
+            'View post data fetched was successfully',
+            $view
+        );
+
+    }
 
     public function all_post(Request $request){
-
-     /////   return "hdhdhd";
-
         $all_post = DBHelpers::with_query(
             Post::class,
             ['user']
         );
+
+        foreach ($all_post as $value) {
+           $value->images = json_decode($value->images);
+        }
 
         return ResponseHelper::success_response(
             'All post data fetched was successfully',
@@ -109,8 +141,6 @@ class PostController extends Controller
     }
 
 
-
-
     public function update_post(Request $request)
     {
         if ($request->isMethod('post')) {
@@ -118,8 +148,6 @@ class PostController extends Controller
 
             if (!$validate->fails() && $validate->validated()) {
                 try {
-
-
                     if (
                         !DBHelpers::exists(Post::class, [
                             'id' => $request->post_id,
@@ -145,12 +173,25 @@ class PostController extends Controller
                         );
                     }
 
+                    $current_post = DBHelpers::with_where_query_filter_first(
+                        Post::class,
+                        ['user'],
+                        ['id' => $request->post_id]
+                    );
+
+                    $images = json_decode($current_post->images);
+
+                    $images->thumbnail = isset($request->thumbnail) ? $request->thumbnail : $images->thumbnail;
+                    $images->main_photo = isset($request->mainPhoto) ? $request->mainPhoto : $images->main_photo;
+
+        
 
                     $data = [
                         'title' => $request->title,
                         'description' => $request->description,
                         'post' => $request->post,
-                        'user_id' => auth()->id()
+                        'user_id' => auth()->id(),
+                        'images' => json_encode($images)
                     ];
 
 
@@ -211,12 +252,12 @@ class PostController extends Controller
             if (!$validate->fails() && $validate->validated()) {
                 try {
 
-
                     $data = [
                         'title' => $request->title,
                         'description' => $request->description,
                         'post' => $request->post,
-                        'user_id' => auth()->id()
+                        'user_id' => auth()->id(),
+                        'images' => json_encode(['main_photo' => $request->mainPhoto, 'thumbnail' => $request->thumbnail]),
                     ];
 
 
