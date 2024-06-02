@@ -18,3 +18,9 @@ Steps to set up (Using Locally Database)
 
 
 
+NOTE:
+the remote database will be taken down within a week from the day my assesment was submitted,
+in such scenario, please make use of your local database. Thank you
+
+
+
